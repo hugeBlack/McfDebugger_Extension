@@ -88,13 +88,7 @@ export class McfRuntime extends EventEmitter {
 	 * "Step out" for Mock debug means: go to previous character
 	 */
 	public stepOut() {
-		/*if (typeof this._currentColumn === 'number') {
-			this._currentColumn -= 1;
-			if (this._currentColumn === 0) {
-				this._currentColumn = undefined;
-			}
-		}
-		this.sendEvent('stopOnStep');*/
+		this.stepIn(114);
 	}
 
 
@@ -258,7 +252,7 @@ export class McfRuntime extends EventEmitter {
 		}
 		this._sourceFiles = await this.getDirTree(workspaceUri)
 	}
-	public client:WebSocket=new WebSocket("ws://127.0.0.1");
+	public client:WebSocket=new WebSocket("");
 
 	public continue(sth?:boolean){
 		if(this.debuggerMode=="byStep"){
@@ -274,10 +268,10 @@ export class McfRuntime extends EventEmitter {
 		this._datapackPathList=[];
 		this._breakPoints
 		await this.loadSource();
-		console.warn(this._sourceFiles);
-		console.warn(this._datapackPathList);
-		console.warn(this._functionPathList);
-		this.client=new WebSocket("ws://127.0.0.1:"+port);
+		//console.warn(this._sourceFiles);
+		//console.warn(this._datapackPathList);
+		//console.warn(this._functionPathList);
+		this.client=new WebSocket("ws://127.0.0.1:"+port,{handshakeTimeout:5});
 		var msgObj:any;
 		this.client.on("open",()=>{
 			this.client.send(`{"command":"setMode","mode":"normalDebug"}`);
@@ -293,7 +287,7 @@ export class McfRuntime extends EventEmitter {
 			this.sendEvent('end');
 		})
 		this.client.on("message",(data)=>{
-			console.warn(data);
+			//console.warn(data);
 			msgObj=JSON.parse(data.toString());
 			switch(msgObj.msgType){
 				case "errorCommandReport":
@@ -366,7 +360,6 @@ export class McfRuntime extends EventEmitter {
 					this._nowCmd=msgObj.bodyObj.value.value.cmdContent;
 					this._currentLine=msgObj.bodyObj.value.value.cmdIndex;
 					this.sendEvent("output", msgObj.bodyObj.value.key, this._nowFile, this._currentLine, 0)
-					console.warn(1);
 					break;
 			}
 		})

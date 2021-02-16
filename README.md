@@ -1,70 +1,165 @@
-# template README
+# Minecraft函数调试器
 
-This is the README for your extension "template". After writing up a brief description, we recommend including the following sections.
+![McFD图标](https://i.loli.net/2021/02/16/r72daAqgbLXKOVU.png)
 
-## Features
+## 简介 / Intoduction
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+**简体中文**：
 
-For example if there is an image subfolder under your extension project workspace:
+你还在为写函数的时候哪个指令没有执行而不知所措吗？你还在为调试而各种/say吗你还在为不知道哪个实体执行了function而一头雾水吗（跑
 
-\!\[feature X\]\(images/feature-x.png\)
+Minecraft Function Debugger (VSCode Extension Part)，简称 McFD，中文名「函数调试器(VSCode插件部分)」是一个能够为 Minecraft Java版的函数提供调试支持的VSCode插件，你可以使用它像调试其他语言一样调试mcfunction
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+若要使用此插件，你必须安装 [对应的Fabric模组](https://github.com/hugeBlack/McfDebugger_Mod) 来和游戏通信
 
-## Requirements
+**English**:  
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Minecraft Function Debugger (VSCode Extension Part), McFD for short, is a vscode extension that provides support for debugging Minecraft functions. You can use it to debug mcfunctions like debugging other languages
 
-## Extension Settings
+To use this extension, you MUST install [the corresponding Fabric mod](https://github.com/hugeBlack/McfDebugger_Mod), which enables it to comunicate with the game.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## 特性 / Features
 
-For example:
+**简体中文**：
 
-This extension contributes the following settings:
+* 创建/取消断点
+* 逐语句执行
+* 在出现异常时暂停并查看异常
+* 查看某条指令输出
+* 查看当前函数执行环境(执行实体，位置等)
+* 查看当前调用堆栈
+* 获取实体/计分板信息
+* 重启调试时自动重载数据包
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+**English**：
 
-## Known Issues
+* Create / Remove breakpoints
+* Run line by line
+* Stop and see the exception when one is thrown
+* See the output of any command
+* See the environment of current function(position,entity,etc.)
+* See the current call stack
+* Get information of entities and scoreboard objectives
+* Reload the datpack when restarting debug
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## 用法/Usage
 
-## Release Notes
+**简体中文**：
 
-Users appreciate release notes as you update your extension.
+您正在使用VSCode，显然，您熟知基本的调试方法(创建断点，步过等)我们在此处不再赘述。
 
-### 1.0.0
+在这里介绍所谓「调试器指令」。
 
-Initial release of ...
+调试器指令是由#@开头的指令。我们这样设计，可以使得即便您忘记了在发布前删除，也不会造成太大的影响。它们是如下几个：
 
-### 1.0.1
+### #@loud
+  
+  该指令用于强制其下方的指令输出执行结果并暂停，像这样：
 
-Fixed issue #.
+  `1 #@loud`
 
-### 1.1.0
+  `2 fill ~-1 ~ ~-1 ~1 ~ ~1`
 
-Added features X, Y, and Z.
+  运行到fill指令的时候，调试器会**暂停**游戏并以异常的形式输出执行结果
 
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
+### #@log
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+  该指令用于强制其下方的指令输出执行结果但**不暂停**，像这样：
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+  `1 #@log`
 
-## Working with Markdown
+  `2 fill ~-1 ~ ~-1 ~1 ~ ~1`
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+  运行到fill指令的时候，调试器会在调试控制台中输出执行结果
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+### #@mute
 
-### For more information
+  该指令用于使调试器忽略下方指令产生的错误，像这样：
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+  `1 #@mute`
 
-**Enjoy!**
+  `2 kill Huge_Black`
+
+  一般来说，玩家Huge_Black不在您的游戏中，所以这条指令会抛出"实体不存在"异常，但因为mute指令的存在，调试器会忽略这个错误且不暂停游戏
+
+### #@getScoreboard
+
+  该指令用于暂停并输出请求的计分板，语法如下：
+
+  `#@getScoreboard byEntity <选择器/假名>`
+
+  可获取对应选择器/假名的所有分数
+
+  `#@getScoreboard byObjective <计分板名>`
+
+  可获取指定计分板的所有记录的分数
+
+### #@getEntity
+
+  该指令用于暂停并输出选择器获得的实体的一些信息
+
+  `#@getEntity <选择器>`
+
+值得注意的是，**如果调试器指令语法错误也会抛出对应的异常**
+ 
+在调试时，我们使用调试器指令来命令调试器进行以下操作
+
+**English**：
+
+Now you are using VSCode. Obviously, you know basic steps of debugging (creating breakpoints and run by step, for example). So I won't repeat it here.
+
+Here are introduction of the"debugger command"。
+
+they are commands begin with "#@". They are intentionally designed like that so that thay won't influene much even if you forget to remove them before releasing your datapack. They are as follows：
+
+### #@loud
+  
+  该指令用于强制其下方的指令输出执行结果并暂停，像这样：
+
+  `1 #@loud`
+
+  `2 fill ~-1 ~ ~-1 ~1 ~ ~1`
+
+  运行到fill指令的时候，调试器会**暂停**游戏并以异常的形式输出执行结果
+
+### #@log
+
+  该指令用于强制其下方的指令输出执行结果但**不暂停**，像这样：
+
+  `1 #@log`
+
+  `2 fill ~-1 ~ ~-1 ~1 ~ ~1`
+
+  运行到fill指令的时候，调试器会在调试控制台中输出执行结果
+
+### #@mute
+
+  该指令用于使调试器忽略下方指令产生的错误，像这样：
+
+  `1 #@mute`
+
+  `2 kill Huge_Black`
+
+  一般来说，玩家Huge_Black不在您的游戏中，所以这条指令会抛出"实体不存在"异常，但因为mute指令的存在，调试器会忽略这个错误且不暂停游戏
+
+### #@getScoreboard
+
+  该指令用于暂停并输出请求的计分板，语法如下：
+
+  `#@getScoreboard byEntity <选择器/假名>`
+
+  可获取对应选择器/假名的所有分数
+
+  `#@getScoreboard byObjective <计分板名>`
+
+  可获取指定计分板的所有记录的分数
+
+### #@getEntity
+
+  该指令用于暂停并输出选择器获得的实体的一些信息
+
+  `#@getEntity <选择器>`
+
+值得注意的是，**如果调试器指令语法错误也会抛出对应的异常**
+ 
+在调试时，我们使用调试器指令来命令调试器进行以下操作

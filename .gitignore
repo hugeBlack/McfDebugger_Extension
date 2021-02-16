@@ -1,0 +1,7 @@
+/.eslintrc.json
+/CHANGELOG.md
+/debug.log
+/node_modules
+/out
+/tsconfig.json
+/vsc-extension-quickstart.md

@@ -4,7 +4,7 @@
 
 Languages:
 
-English / [简体中文](https://github.com/hugeBlack/McfDebugger_Extension/README_zh_cn.md)
+English / [简体中文](https://github.com/hugeBlack/McfDebugger_Extension/blob/master/README_zh_cn.md)
 
 ## Intoduction
 

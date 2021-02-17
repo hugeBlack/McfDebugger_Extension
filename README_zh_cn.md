@@ -2,6 +2,10 @@
 
 ![McFD图标](https://i.loli.net/2021/02/16/r72daAqgbLXKOVU.png)
 
+语言:
+
+[English](https://github.com/hugeBlack/McfDebugger_Extension/blob/master/README.md) / 简体中文
+
 ## 简介
 
 你还在为写函数的时候哪个指令没有执行而不知所措吗？你还在为调试而各种/say吗你还在为不知道哪个实体执行了function而一头雾水吗（跑

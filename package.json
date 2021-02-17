@@ -1,6 +1,6 @@
 {
 	"publisher": "HugeBlack",
-	"icon": "https://github.com/hugeBlack/McfDebugger_Extension/blob/master/icon.png",
+	"icon": "icon.png",
 	"repository": {"url": "https://github.com/hugeBlack/McfDebugger_Extension"},
 	"name": "mcfdebugger",
 	"displayName": "Minecraft Function Debugger",

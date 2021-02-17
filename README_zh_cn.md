@@ -1,6 +1,6 @@
 # Minecraft函数调试器
 
-![McFD图标](https://i.loli.net/2021/02/16/r72daAqgbLXKOVU.png)
+![banner.png](https://i.loli.net/2021/02/17/3lkRqAjT5hNGorJ.png)
 
 语言:
 

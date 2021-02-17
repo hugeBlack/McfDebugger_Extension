@@ -252,7 +252,7 @@ export class McfRuntime extends EventEmitter {
 		}
 		this._sourceFiles = await this.getDirTree(workspaceUri)
 	}
-	public client:WebSocket=new WebSocket("");
+	public client:WebSocket=new WebSocket("ws://127.0.0.1");
 
 	public continue(sth?:boolean){
 		if(this.debuggerMode=="byStep"){

@@ -51,7 +51,27 @@
 							}
 						}
 					}
-				}
+				},
+				"initialConfigurations": [
+					{
+						"type": "mcf",
+						"request": "launch",
+						"name": "Start Debugging",
+						"port": 1453
+					}
+				],
+				"configurationSnippets": [
+					{
+						"label": "Minecraft Function Debug: Launch",
+						"description": "A new configuration for debugging functions of a datapack.",
+						"body": {
+							"type": "mcf",
+							"request": "launch",
+							"name": "Start Debugging",
+							"port": 1453
+						}
+					}
+				]
 			}
 		]
 	},

@@ -261,7 +261,12 @@ export class McfRuntime extends EventEmitter {
 		}
 		this.client.send('{"command":"next"}');
 	}
-	public step(sth?:boolean){}
+	public step(sth?:boolean){
+		this.stepOut();
+	}
+
+	public dataVersion:number=2
+	public versionChecked:boolean=false;
 
 	public async start(port:number){
 		this._functionPathList=[];
@@ -271,9 +276,10 @@ export class McfRuntime extends EventEmitter {
 		//console.warn(this._sourceFiles);
 		//console.warn(this._datapackPathList);
 		//console.warn(this._functionPathList);
-		this.client=new WebSocket("ws://127.0.0.1:"+port,{handshakeTimeout:5});
+		this.client=new WebSocket("ws://127.0.0.1:"+port,{handshakeTimeout:2000});
 		var msgObj:any;
 		this.client.on("open",()=>{
+			this.client.send(`{"command":"getVersion"}`);
 			this.client.send(`{"command":"setMode","mode":"normalDebug"}`);
 			this.debuggerMode="normalDebug";
 			this.client.send(`{"command":"reload"}`);
@@ -289,6 +295,18 @@ export class McfRuntime extends EventEmitter {
 		this.client.on("message",(data)=>{
 			//console.warn(data);
 			msgObj=JSON.parse(data.toString());
+			if(msgObj.msgType=="versionResult"){
+				if(parseInt(msgObj.bodyObj)!=this.dataVersion){
+					window.showErrorMessage(parseInt(msgObj.bodyObj)>this.dataVersion?"Outdated extenion. Please Update your extension.":"Outdated mod. Please Update your mod.");
+					this.sendEvent('end');
+				}else{
+					this.versionChecked=true;
+				}
+			}else if(!this.versionChecked){
+				window.showErrorMessage("Outdated mod. Please Update your mod.");
+				this.sendEvent('end');
+			}
+				
 			switch(msgObj.msgType){
 				case "errorCommandReport":
 					this.functionProcess(msgObj);

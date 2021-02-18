@@ -12,7 +12,7 @@
 
 Minecraft Function Debugger (VSCode Extension Part)，简称 McFD，中文名「函数调试器(VSCode插件部分)」是一个能够为 Minecraft Java版的函数提供调试支持的VSCode插件，你可以使用它像调试其他语言一样调试mcfunction
 
-若要使用此插件，你必须安装 [对应的Fabric模组](https://github.com/hugeBlack/McfDebugger_Mod) 来和游戏通信
+若要使用此插件，你必须安装 [对应的Fabric模组](https://github.com/hugeBlack/McfDebugger_Mod/releases) 来和游戏通信
 
 ## 特性
 

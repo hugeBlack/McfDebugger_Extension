@@ -3,9 +3,9 @@
 	"icon": "icon.png",
 	"repository": {"url": "https://github.com/hugeBlack/McfDebugger_Extension"},
 	"name": "mcfdebugger",
-	"displayName": "Minecraft Function Debugger",
-	"description": "A debugger that debugs minecraft function.",
-	"version": "0.0.1",
+	"displayName": "Debugger for Minecraft Function",
+	"description": "A debugger that debugs minecraft function with several useful features.",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
@@ -22,10 +22,6 @@
 			{
 				"command": "mcfdebugger.forceStart",
 				"title": "mcfdebugger:Hello World"
-			},
-			{
-				"command": "mcfdebugger.sendNext",
-				"title": "mcfdebugger:send Next"
 			}
 		],
 		"breakpoints": [

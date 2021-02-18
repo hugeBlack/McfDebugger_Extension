@@ -10,7 +10,7 @@ English / [简体中文](https://github.com/hugeBlack/McfDebugger_Extension/blob
 
 Minecraft Function Debugger (VSCode Extension Part), McFD for short, is a vscode extension that provides support for debugging Minecraft functions. You can use it to debug mcfunctions like debugging other languages
 
-To use this extension, you MUST install [the corresponding Fabric mod](https://github.com/hugeBlack/McfDebugger_Mod), which enables it to comunicate with the game.
+To use this extension, you MUST install [the corresponding Fabric mod](https://github.com/hugeBlack/McfDebugger_Mod/releases), which enables it to comunicate with the game.
 
 ## Features
 

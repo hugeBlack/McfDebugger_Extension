@@ -265,7 +265,7 @@ export class McfRuntime extends EventEmitter {
 		this.stepOut();
 	}
 
-	public dataVersion:number=2
+	public dataVersion:number=3;
 	public versionChecked:boolean=false;
 
 	public async start(port:number){
@@ -293,11 +293,11 @@ export class McfRuntime extends EventEmitter {
 			this.sendEvent('end');
 		})
 		this.client.on("message",(data)=>{
-			//console.warn(data);
+			console.warn(data);
 			msgObj=JSON.parse(data.toString());
 			if(msgObj.msgType=="versionResult"){
 				if(parseInt(msgObj.bodyObj)!=this.dataVersion){
-					window.showErrorMessage(parseInt(msgObj.bodyObj)>this.dataVersion?"Outdated extenion. Please Update your extension.":"Outdated mod. Please Update your mod.");
+					window.showErrorMessage(parseInt(msgObj.bodyObj)>this.dataVersion?"Outdated extension. Please Update your extension.":"Outdated mod. Please Update your mod.");
 					this.sendEvent('end');
 				}else{
 					this.versionChecked=true;
@@ -319,7 +319,7 @@ export class McfRuntime extends EventEmitter {
 						this._exceptionId=exceptionArr[0];
 						this._exceptionName=exceptionArr[1]
 						this._exceptionMsg="";
-						this.sendEvent("output",msgObj.bodyObj.exception, this._nowFile, msgObj.bodyObj.cmdIndex,0)
+						this.sendEvent("warn",msgObj.bodyObj.exception, this._nowFile, msgObj.bodyObj.cmdIndex,0)
 					}
 					
 					this.sendEvent("stopOnException");
@@ -378,6 +378,9 @@ export class McfRuntime extends EventEmitter {
 					this._nowCmd=msgObj.bodyObj.value.value.cmdContent;
 					this._currentLine=msgObj.bodyObj.value.value.cmdIndex;
 					this.sendEvent("output", msgObj.bodyObj.value.key, this._nowFile, this._currentLine, 0)
+					break;
+				case "functionSyntaxError":
+					this.sendEvent("warn", msgObj.bodyObj.errorMsg, this.findFileFromFunction(msgObj.bodyObj.namespace,msgObj.bodyObj.path).path, parseInt(msgObj.bodyObj.cmdIndex), 0)
 					break;
 			}
 		})

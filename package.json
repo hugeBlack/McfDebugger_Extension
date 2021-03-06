@@ -47,6 +47,11 @@
 								"type": "integer",
 								"description": "port",
 								"default": 1453
+							},
+							"features":{
+								"type":"array",
+								"description": "features",
+								"default":[]
 							}
 						}
 					}
@@ -56,7 +61,10 @@
 						"type": "mcf",
 						"request": "launch",
 						"name": "Start Debugging",
-						"port": 1453
+						"port": 1453,
+						"features":[
+
+						]
 					}
 				],
 				"configurationSnippets": [
@@ -71,6 +79,22 @@
 						}
 					}
 				]
+			}
+		],
+		"configuration":[
+			{
+				"title": "McfDebugger",
+				"properties": {
+					"mcfdebugger.display_language":{
+						"type":"string",
+						"default":"en_us",
+						"anyOf": [
+							"en_us",
+							"zh_cn"
+						],
+						"description": "Display Language / 显示语言"
+					}
+				}
 			}
 		]
 	},

@@ -3,6 +3,7 @@ import { workspace ,window} from 'vscode';
 let Path = require('path');
 let fs = require('fs');
 import * as WebSocket from "ws";
+import {lang} from "./language";
 export interface FileAccessor {
 	readFile(path: string): Promise<string>;
 }
@@ -123,6 +124,15 @@ export class McfRuntime extends EventEmitter {
 	 * Returns a fake 'stacktrace' where every 'stackframe' is a word from the current line.
 	 */
 	public _nowFile:string="";
+	public langMap=lang.getLangMap();
+	public getText(key:string):string{
+		var t= this.langMap.get(key)
+		if(typeof t != "undefined"){
+			return t
+		}else{
+			return "unknowTranslable."+key;
+		}
+	}
 	public stack(stackObj:any[]): IStack {
 		var frames:any[]=[]
 		frames.push({
@@ -284,12 +294,12 @@ export class McfRuntime extends EventEmitter {
 			this.debuggerMode="normalDebug";
 			this.client.send(`{"command":"reload"}`);
 			this.client.send(`{"command":"next"}`);
-			this.sendEvent("output","Debugger Connected", this._sourceFile, 1,1)
+			this.sendEvent("output",this.getText("connected"), this._sourceFile, 1,1)
 			this.sendBp()
 		});
 		this.client.on("error",(error)=>{
 			this.sendEvent("output",error, this._sourceFile, 1,1);
-			window.showErrorMessage("Can not connect to the debug Websocket server.")
+			window.showErrorMessage(this.getText("connect_failed"));
 			this.sendEvent('end');
 		})
 		this.client.on("message",(data)=>{
@@ -297,13 +307,13 @@ export class McfRuntime extends EventEmitter {
 			msgObj=JSON.parse(data.toString());
 			if(msgObj.msgType=="versionResult"){
 				if(parseInt(msgObj.bodyObj)!=this.dataVersion){
-					window.showErrorMessage(parseInt(msgObj.bodyObj)>this.dataVersion?"Outdated extension. Please Update your extension.":"Outdated mod. Please Update your mod.");
+					window.showErrorMessage(parseInt(msgObj.bodyObj)>this.dataVersion?this.getText("outdated_extension"):this.getText("outdated_mod"));
 					this.sendEvent('end');
 				}else{
 					this.versionChecked=true;
 				}
 			}else if(!this.versionChecked){
-				window.showErrorMessage("Outdated mod. Please Update your mod.");
+				window.showErrorMessage(this.getText("outdated_mod"));
 				this.sendEvent('end');
 			}
 				
@@ -313,7 +323,7 @@ export class McfRuntime extends EventEmitter {
 					this._variables=msgObj.bodyObj.source;
 					var exceptionArr=msgObj.bodyObj.exception.split(": ");
 					if(exceptionArr[1]=="MCFDEBUGGER"){
-						this._exceptionId="Debugger Info"
+						this._exceptionId=this.getText("debugger_info");
 						this._exceptionName=""
 					}else{
 						this._exceptionId=exceptionArr[0];
@@ -356,19 +366,19 @@ export class McfRuntime extends EventEmitter {
 					}
 					break;
 				case "getScoresResultByObjective":
-					this._exceptionMsg=this.transferTreeView(msgObj.bodyObj,"Result By Objective")
+					this._exceptionMsg=this.transferTreeView(msgObj.bodyObj,this.getText("result_by_objective"))
 					break;
 				case "getScoresResultByEntity":
-					this._exceptionMsg=this.transferTreeView(msgObj.bodyObj,"Result By Entity")
+					this._exceptionMsg=this.transferTreeView(msgObj.bodyObj,this.getText("result_by_entity"))
 					break;
 				case "stackReport":
 					this._stackObj=msgObj.bodyObj
 					break;
 				case "getEntityResult":
-					this._exceptionMsg=this.transferTreeView(msgObj.bodyObj,"Get Result Entity")
+					this._exceptionMsg=this.transferTreeView(msgObj.bodyObj,this.getText("get_result_entity"))
 					break;
 				case "loudResult":
-					this._exceptionMsg="Command output:\n"+msgObj.bodyObj.value;
+					this._exceptionMsg=`${this.getText("command_output")}:${msgObj.bodyObj.value}`;
 					break;
 				case "logResult":
 					var a=this.findFileFromFunction(msgObj.bodyObj.value.value.funNamespace,msgObj.bodyObj.value.value.funPath)

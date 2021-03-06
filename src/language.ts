@@ -13,7 +13,8 @@ export class lang{
                 langMap.set("result_by_objective","根据计分板的结果");
                 langMap.set("result_by_entity","根据实体的结果");
                 langMap.set("get_result_entity","获取的实体信息");
-                langMap.set("command_output","指令输出")
+                langMap.set("command_output","指令输出");
+                langMap.set("breakpoint_hit"," 断点命中。")
                 break;
             default:
                 langMap.set("connected","Debugger Connected");
@@ -24,7 +25,8 @@ export class lang{
                 langMap.set("result_by_objective","Result By Objective");
                 langMap.set("result_by_entity","Result By Entity");
                 langMap.set("get_result_entity","Get Result Entity");
-                langMap.set("command_output","Command output")
+                langMap.set("command_output","Command output");
+                langMap.set("breakpoint_hit","Breakpoint hit.")
                 break;
         }
         return langMap;

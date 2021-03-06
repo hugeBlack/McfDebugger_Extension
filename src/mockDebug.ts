@@ -35,6 +35,7 @@ interface ILaunchRequestArguments extends DebugProtocol.LaunchRequestArguments {
 	/** run without debugging 
 	noDebug?: boolean;*/
 	port:number;
+	features:Array<string>;
 }
 
 export class MockDebugSession extends LoggingDebugSession {
@@ -222,7 +223,7 @@ export class MockDebugSession extends LoggingDebugSession {
 		await this._configurationDone.wait(1000);
 
 		// start the program in the runtime
-		await this._runtime.start(args.port);
+		await this._runtime.start(args.port,args.features);
 
 		this.sendResponse(response);
 	}

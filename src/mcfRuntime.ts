@@ -275,10 +275,10 @@ export class McfRuntime extends EventEmitter {
 		this.stepOut();
 	}
 
-	public dataVersion:number=3;
+	public dataVersion:number=4;
 	public versionChecked:boolean=false;
 
-	public async start(port:number){
+	public async start(port:number,features:Array<string>){
 		this._functionPathList=[];
 		this._datapackPathList=[];
 		this._breakPoints
@@ -294,6 +294,7 @@ export class McfRuntime extends EventEmitter {
 			this.debuggerMode="normalDebug";
 			this.client.send(`{"command":"reload"}`);
 			this.client.send(`{"command":"next"}`);
+			this.client.send(JSON.stringify({command:"setFeatures",features:features}))
 			this.sendEvent("output",this.getText("connected"), this._sourceFile, 1,1)
 			this.sendBp()
 		});
@@ -359,7 +360,7 @@ export class McfRuntime extends EventEmitter {
 							} catch (e) { }
 							if (hitBp) {
 								this.sendEvent('stopOnBreakpoint');
-								this.sendEvent("output", "Breakpoint hit.", this._nowFile, msgObj.bodyObj.cmdIndex, 0)
+								this.sendEvent("output", this.getText("breakpoint_hit"), this._nowFile, msgObj.bodyObj.cmdIndex, 0)
 							}
 						}
 						

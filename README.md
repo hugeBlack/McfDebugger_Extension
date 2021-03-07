@@ -30,6 +30,7 @@ To use this extension, you MUST install [the corresponding Fabric mod](https://g
 2. Open the "run" panel and create a "launch.json".
 3. Default settings should be filled automatically. If it didn't, please specify a port, which is 1453 by default, and the debug type should be "mcf".  
    If you have already changed the port in game, please also change it here manually.
+   Learn more about the settings in the "launch.json" section.
 4. Click "Start Debugging" and enjoy.
 5. Warning: **DO NOT use "step out" and "step over" functions yet because they WILL cause problems**(e.g. Your game may freeze forever)！These two functions may come in the future.
 
@@ -45,9 +46,10 @@ they are commands begin with "#@". They are intentionally designed like that so 
   
   By using this command, you can force a command to output its result as an exception. Using this command will cause the game to freeze. You can use it like this:
 
-  `1 #@loud`
-
-  `2 fill ~-1 ~ ~-1 ~1 ~ ~1`
+  ```mcfunction
+  #@loud
+  fill ~-1 ~ ~-1 ~1 ~ ~1
+  ```
 
   When executing the fill command, the debugger will **freeze** the game and output the result as an exception.
 
@@ -55,9 +57,10 @@ they are commands begin with "#@". They are intentionally designed like that so 
 
   This command will output the command result but **keep the game running**. You can use it like this:
 
-  `1 #@log`
-
-  `2 fill ~-1 ~ ~-1 ~1 ~ ~1`
+  ```mcfunction
+  #@log
+  fill ~-1 ~ ~-1 ~1 ~ ~1
+  ```
 
   When executing the fill command, the debugger will  output the result in the debug console.
 
@@ -65,9 +68,10 @@ they are commands begin with "#@". They are intentionally designed like that so 
 
   This command will tell the debugger to ignore any exception the next command threw. You can use it like this:
 
-  `1 #@mute`
-
-  `2 kill Huge_Black`
+  ```mcfunction
+  #@mute
+  kill Huge_Black
+  ```
 
   Generally speaking, the player Huge_Black doesn't exist in you game. So the game will throw a "entity not found" exception. But because the #@mute, the debugger will ignore it whatsoever and will not freeze the game. But if you put a breakpoint, the breakpoint will still be hit despite the #@mute.
 
@@ -75,11 +79,15 @@ they are commands begin with "#@". They are intentionally designed like that so 
 
   This command can be used to freeze the game and output scoreboard information:
 
-  `#@getScoreboard byEntity <Selector/Fake Player>`
+  ```mcfunction
+  #@getScoreboard byEntity <Selector/Fake Player>
+  ```
 
   will output all scores the entity selected by the selector or "fake player" hold.
 
-  `#@getScoreboard byObjective <Objective Name>`
+  ```mcfunction
+  #@getScoreboard byObjective <Objective Name>
+  ```
 
   will get all scores the corresponding objective holds.
 
@@ -87,8 +95,44 @@ they are commands begin with "#@". They are intentionally designed like that so 
 
   This command is used to get some information of the selected entity.
 
-  `#@getEntity <Selector>`
+  ```mcfunction
+  #@getEntity <Selector>
+  ```
 
 Note: **corresponding exceptions will be thrown if errors occurred when executing debugger commands**.
 
-If you are still here, I apologize for my poor English.
+## launch.json
+
+In launch.json, you can enable or disable certain features. A complete launch.json may look like this one：
+
+```json  
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "mcf",
+          "request": "launch",
+          "name": "Start Debugging",
+          "port": 1453,
+          "features": [
+              "--stopOnException"
+          ]
+      }
+  ]
+}
+```
+
+Here are some features：  
+
+* --stopOnException：  
+  Disable the pause when exceptions occurs. The infomation of the exceptions will be shown in the debug console.
+* debugThisMod：  
+  Print debug information in Minecraft log.
+
+## Language Settings
+
+You can switch between languages via searching in the Vscode's settings for "mcfdebugger.display_language"
+
+For now, zh_cn and en_us is suported.
+
+If you are still here, I apologize for my poor English. Also, I will appreciate it if you can translate this extension into other languages or correct the mistakes in en_us and readme.

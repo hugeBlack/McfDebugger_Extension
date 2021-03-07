@@ -335,6 +335,12 @@ export class McfRuntime extends EventEmitter {
 					
 					this.sendEvent("stopOnException");
 					break;
+					case "nonStopErrorCommandReport":
+						this.functionProcess(msgObj);
+						this._variables=msgObj.bodyObj.source;
+						var exceptionArr=msgObj.bodyObj.exception.split(": ");
+						this.sendEvent("warn",msgObj.bodyObj.exception, this._nowFile, msgObj.bodyObj.cmdIndex,0);
+						break;
 				case "commandReport":
 					if(msgObj.bodyObj.pause){
 						this.functionProcess(msgObj);

@@ -93,4 +93,8 @@ Minecraft Function Debugger (VSCode Extension Part)，简称 McFD，中文名「
 
   `#@getEntity <选择器>`
 
-值得注意的是，**如果调试器指令语法错误也会抛出对应的异常** 
+值得注意的是，**如果调试器指令语法错误也会抛出对应的异常**  
+
+## launch.json配置
+
+  在launch.json中，你可以

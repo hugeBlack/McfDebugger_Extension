@@ -2,15 +2,21 @@
 
 ![banner.png](https://i.loli.net/2021/02/17/3lkRqAjT5hNGorJ.png)
 
-## 0.0.1
+## 0.1.1
 
 - 简体中文
-  - 首次发布
-  - 时间：2021/1/17
+  - 添加了可选特性功能：nonStopOnException  
+    具体用法请移步Readme
+  - 错误信息将以红色而不是黄色在调试控制台显示
+  - 请将Mod版本升级到v1.1.1来和这个版本的插件一起工作
+  - 更新时间：2021/3/8
 
-- English:
-  - Initial release  
-  - Date: 2021/1/17
+- English
+  - Added selectable feature: nonStopOnException  
+  see Readme for more information
+  - Error messages are now displayed in red instead of yellow in debug console
+  - Please upgrade your VSCode extension to v0.0.4 to work with this version of mod.
+  - Date: 2021/3/8
 
 ## 0.0.2
 
@@ -27,3 +33,13 @@
   - New icon
   - Please upgrade your VSCode extension to v0.0.2 to work with this version of mod.
   - Date: 2021/2/18
+
+## 0.0.1
+
+- 简体中文
+  - 首次发布
+  - 时间：2021/1/17
+
+- English:
+  - Initial release  
+  - Date: 2021/1/17

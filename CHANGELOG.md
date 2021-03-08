@@ -8,6 +8,7 @@
   - 添加了可选特性功能：nonStopOnException  
     具体用法请移步Readme
   - 错误信息将以红色而不是黄色在调试控制台显示
+  - 支持语言切换
   - 请将Mod版本升级到v1.1.1来和这个版本的插件一起工作
   - 更新时间：2021/3/8
 
@@ -15,7 +16,8 @@
   - Added selectable feature: nonStopOnException  
   see Readme for more information
   - Error messages are now displayed in red instead of yellow in debug console
-  - Please upgrade your VSCode extension to v0.0.4 to work with this version of mod.
+  - Support for the switch between languages
+  - Please upgrade your Minecraft Mod to v0.1.1 to work with this version of mod.
   - Date: 2021/3/8
 
 ## 0.0.2

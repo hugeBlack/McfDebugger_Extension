@@ -5,7 +5,7 @@
 	"name": "mcfdebugger",
 	"displayName": "Debugger for Minecraft Function",
 	"description": "A debugger that debugs minecraft function with several useful features.",
-	"version": "0.0.4",
+	"version": "0.1.1",
 	"engines": {
 		"vscode": "^1.53.0"
 	},

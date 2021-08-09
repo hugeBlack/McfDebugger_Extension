@@ -275,7 +275,7 @@ export class McfRuntime extends EventEmitter {
 		this.stepOut();
 	}
 
-	public dataVersion:number=4;
+	public dataVersion:number=5;
 	public versionChecked:boolean=false;
 
 	public async start(port:number,features:Array<string>){
@@ -283,9 +283,9 @@ export class McfRuntime extends EventEmitter {
 		this._datapackPathList=[];
 		this._breakPoints
 		await this.loadSource();
-		//console.warn(this._sourceFiles);
-		//console.warn(this._datapackPathList);
-		//console.warn(this._functionPathList);
+		console.warn(this._sourceFiles);
+		console.warn(this._datapackPathList);
+		console.warn(this._functionPathList);
 		this.client=new WebSocket("ws://127.0.0.1:"+port,{handshakeTimeout:2000});
 		var msgObj:any;
 		this.client.on("open",()=>{
@@ -469,7 +469,7 @@ export class McfRuntime extends EventEmitter {
 	private addFile(dir:any,file:any,path:any){
 		if(file.isFile()) {
 			if(/.mcfunction/g.test(file.name)){
-				var lines: string[] = fs.readFileSync(path + "\\" + file.name, 'utf-8').split("\r\n");
+				var lines: string[] = fs.readFileSync(decodeURIComponent(path + "\\" + file.name), 'utf-8').split("\r\n");
 				dir.files.push({
 					name: file.name,
 					contents: lines
@@ -483,6 +483,7 @@ export class McfRuntime extends EventEmitter {
 	}
 
     public async getDirTree(path: string) {
+		path=decodeURIComponent(path);
         if (fs.lstatSync(path).isDirectory()) {
             let temp = path.split('\\');
             let res: any = {

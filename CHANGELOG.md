@@ -2,6 +2,18 @@
 
 ![banner.png](https://i.loli.net/2021/02/17/3lkRqAjT5hNGorJ.png)
 
+## 0.2.1
+
+- 简体中文
+  - 支持Minecraft1.17.1，请把Mod升级到v1.2.1来配合使用
+  - 修复了中文路径导致无法使用的bug
+  - 更新时间：2021/8/16
+
+- English
+  - Fix the bug caused by Chinese characters in file path.
+  - Support for Minecraft 1.17.1. Please upgrade your Minecraft Mod to v1.2.1 to work with this version of mod.
+  - Date: 2021/8/16
+
 ## 0.1.1
 
 - 简体中文
@@ -17,7 +29,7 @@
   see Readme for more information
   - Error messages are now displayed in red instead of yellow in debug console
   - Support for the switch between languages
-  - Please upgrade your Minecraft Mod to v0.1.1 to work with this version of mod.
+  - Please upgrade your Minecraft Mod to v1.1.1 to work with this version of mod.
   - Date: 2021/3/8
 
 ## 0.0.2

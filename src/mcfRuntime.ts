@@ -283,9 +283,9 @@ export class McfRuntime extends EventEmitter {
 		this._datapackPathList=[];
 		this._breakPoints
 		await this.loadSource();
-		console.warn(this._sourceFiles);
-		console.warn(this._datapackPathList);
-		console.warn(this._functionPathList);
+		//console.warn(this._sourceFiles);
+		//console.warn(this._datapackPathList);
+		//console.warn(this._functionPathList);
 		this.client=new WebSocket("ws://127.0.0.1:"+port,{handshakeTimeout:2000});
 		var msgObj:any;
 		this.client.on("open",()=>{
